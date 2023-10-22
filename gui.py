@@ -286,7 +286,6 @@ obj_button_descript = Button(
     activebackground='#FFF',
     borderwidth=0,
     highlightthickness=0,
-    command=lambda: print("button_1 clicked"),
     relief="flat"
 )
 
@@ -298,7 +297,7 @@ obj_button_descript.place(
 )
 
 obj_button_descript.bind(
-    "<Button-1>", lambda event: main.descript(input_step_one, input_step_three))
+    "<Button-1>", lambda event: main.descript(input_step_one, input_step_two, input_step_three, input_public_key, input_private_key))
 
 canvas.create_text(
     337.0,

@@ -50,7 +50,6 @@ def key_creator():
 
 def encript(input_step_one, input_step_two, input_step_three, input_public_key, input_private_key):
     key_creator()
-    input_step_one.config(state="normal")
     input_step_one_bytes = input_step_one.get("1.0", "end-1c").encode("utf-8")
 
     with open("public_key.pem", "rb") as f:
@@ -81,7 +80,8 @@ def encript(input_step_one, input_step_two, input_step_three, input_public_key, 
                      input_public_key, input_private_key)
 
 
-def descript(input_step_one, input_step_three):
+def descript(input_step_one, input_step_two, input_step_three,
+             input_public_key, input_private_key):
 
     with open("private_key.pem", "rb") as f:
         private_key_pem = f.read()
@@ -97,8 +97,19 @@ def descript(input_step_one, input_step_three):
             label=None
         )
     )
-    active_input(input_step_one, input_step_three)
-    reset_input(input_step_three)
+    active_input(input_step_one, input_step_two, input_step_three,
+                 input_public_key, input_private_key)
+    reset_input(input_step_one, input_step_two, input_step_three,
+                input_public_key, input_private_key)
+    input_step_one.insert(
+        "1.0", "Insira uma mensagem para\nser criptografada...")
+    input_step_two.insert(
+        "1.0", 'Nenhum texto criptografado!')
     input_step_three.insert(
         "1.0", decrypted_message.decode())
-    deactivate_input(input_step_three)
+    input_public_key.insert(
+        "1.0", 'Nenhuma chave pública gerada!')
+    input_private_key.insert(
+        "1.0", 'Nenhuma chave privada gerada!')
+    deactivate_input(input_step_two, input_step_three,
+                     input_public_key, input_private_key)
